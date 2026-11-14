@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4vu4rws1t0kr"]
+
+[ext_resource type="Texture2D" uid="uid://honb0ep8jeg0" path="res://assets/particle_material.png" id="1_vbno8"]
+[ext_resource type="Script" uid="uid://dcu6wimls6og1" path="res://scripts/spin.gd" id="1_xq8hm"]
+
+[sub_resource type="Curve" id="Curve_vbno8"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1.44986), 0.0, -4.31181, 0, 0, Vector2(1, 0.25391), 0.331675, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xq8hm"]
+curve = SubResource("Curve_vbno8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a5jdd"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 128.0
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+orbit_velocity_min = -0.44
+orbit_velocity_max = -0.44
+radial_velocity_min = -29.27
+radial_velocity_max = -29.27
+gravity = Vector3(0, 0, 0)
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_xq8hm")
+
+[node name="spin" type="Node2D"]
+script = ExtResource("1_xq8hm")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 50
+texture = ExtResource("1_vbno8")
+process_material = SubResource("ParticleProcessMaterial_a5jdd")

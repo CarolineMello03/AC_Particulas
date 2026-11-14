@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://bvcyx8v4x70ql"]
+
+[ext_resource type="Script" uid="uid://bf7a8i07xlbwb" path="res://scripts/speed.gd" id="1_d32xq"]
+[ext_resource type="Texture2D" uid="uid://honb0ep8jeg0" path="res://assets/particle_material.png" id="1_jxk6o"]
+
+[sub_resource type="Curve" id="Curve_d32xq"]
+_limits = [-200.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 15.7303), 0.0, 0.0, 0, 0, Vector2(0.654412, 155.056), 531.51, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mwkbe"]
+curve = SubResource("Curve_d32xq")
+
+[sub_resource type="Curve" id="Curve_jxk6o"]
+_limits = [0.0, 50.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 25.8427), 1.4788, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_d32xq"]
+curve = SubResource("Curve_jxk6o")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_73mvb"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 80.0
+emission_ring_inner_radius = 50.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 70.0
+radial_accel_max = 100.0
+radial_accel_curve = SubResource("CurveTexture_mwkbe")
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_d32xq")
+
+[node name="speed" type="Node2D"]
+script = ExtResource("1_d32xq")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 40
+texture = ExtResource("1_jxk6o")
+process_material = SubResource("ParticleProcessMaterial_73mvb")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)

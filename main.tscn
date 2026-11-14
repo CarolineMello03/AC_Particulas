@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=3 uid="uid://1evue5hpjq7l"]
+
+[ext_resource type="PackedScene" uid="uid://bvcyx8v4x70ql" path="res://scenes/speed.tscn" id="1_lquwl"]
+[ext_resource type="PackedScene" uid="uid://cmcurhbjtch7g" path="res://scenes/explosion.tscn" id="2_7mycd"]
+[ext_resource type="PackedScene" uid="uid://bboiyphw75src" path="res://scenes/fire.tscn" id="3_272bh"]
+[ext_resource type="PackedScene" uid="uid://dbcr0igm1lyv2" path="res://scenes/rain.tscn" id="4_5vw27"]
+[ext_resource type="PackedScene" uid="uid://c4vu4rws1t0kr" path="res://scenes/spin.tscn" id="5_kek77"]
+
+[node name="main" type="Node2D"]
+
+[node name="speed" parent="." instance=ExtResource("1_lquwl")]
+
+[node name="explosion" parent="." instance=ExtResource("2_7mycd")]
+
+[node name="fire" parent="." instance=ExtResource("3_272bh")]
+
+[node name="rain" parent="." instance=ExtResource("4_5vw27")]
+
+[node name="spin" parent="." instance=ExtResource("5_kek77")]

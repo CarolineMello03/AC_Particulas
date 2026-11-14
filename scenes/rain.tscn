@@ -1,0 +1,97 @@
+[gd_scene load_steps=15 format=3 uid="uid://dbcr0igm1lyv2"]
+
+[ext_resource type="Script" uid="uid://8cstdxslha2c" path="res://scripts/rain.gd" id="1_tchf5"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_tchf5"]
+polygon = PackedVector2Array(-114, 39, 114, 38, 114, 64, -115, 64)
+
+[sub_resource type="Curve" id="Curve_tchf5"]
+_limits = [0.0, 0.5, 0.0, 1.0]
+_data = [Vector2(0, 0.135235), 0.0, 1.86568, 0, 0, Vector2(0.5, 0.5), 0.0, 0.0, 0, 0, Vector2(1, 0.218951), -0.621896, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_5mvay"]
+curve = SubResource("Curve_tchf5")
+
+[sub_resource type="Gradient" id="Gradient_rru6j"]
+colors = PackedColorArray(1, 1, 1, 0.0784314, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_j8tiy"]
+gradient = SubResource("Gradient_rru6j")
+
+[sub_resource type="Curve" id="Curve_5duj6"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ypopp"]
+_limits = [0.0, 30.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 7.3965), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_7bqv2"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_0q17u"]
+curve_x = SubResource("Curve_5duj6")
+curve_y = SubResource("Curve_ypopp")
+curve_z = SubResource("Curve_7bqv2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5mvay"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -100, 0)
+emission_shape = 3
+emission_box_extents = Vector3(120, 1, 1)
+gravity = Vector3(0, 350, 0)
+scale_min = 0.3
+scale_over_velocity_curve = SubResource("CurveXYZTexture_0q17u")
+color = Color(0.0392157, 0.729412, 1, 1)
+color_initial_ramp = SubResource("GradientTexture1D_j8tiy")
+alpha_curve = SubResource("CurveTexture_5mvay")
+collision_mode = 2
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 1
+
+[sub_resource type="Curve" id="Curve_5mvay"]
+_data = [Vector2(0, 0.103036), 0.0, 1.80135, 0, 0, Vector2(0.5, 0.515639), 0.0, 0.0, 0, 0, Vector2(1, 0.0611776), -1.83296, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_rru6j"]
+curve = SubResource("Curve_5mvay")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tchf5"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 200, 0)
+color = Color(0, 0.796078, 1, 1)
+alpha_curve = SubResource("CurveTexture_rru6j")
+
+[node name="rain" type="Node2D"]
+script = ExtResource("1_tchf5")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2(0, 24)
+occluder = SubResource("OccluderPolygon2D_tchf5")
+
+[node name="GPUParticles2D_rain" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 500
+sub_emitter = NodePath("../GPUParticles2D_splash")
+preprocess = 0.5
+collision_base_size = 24.03
+visibility_rect = Rect2(-120, -70, 240, 140)
+process_material = SubResource("ParticleProcessMaterial_5mvay")
+
+[node name="GPUParticles2D_splash" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 200
+lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_tchf5")
